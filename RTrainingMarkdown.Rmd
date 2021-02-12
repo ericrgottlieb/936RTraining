@@ -1,0 +1,53 @@
+---
+title: "TrainingMarkdown"
+output: html_document
+---
+
+https://cmu-delphi.github.io/delphi-epidata/api/covidcast.html#constructing-api-queries
+
+https://cmu-delphi.github.io/delphi-epidata/api/covidcast_signals.html
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(dslabs)
+library(dplyr)
+library(tidyverse)
+library(rvest)
+devtools::install_github("cmu-delphi/covidcast", ref = "main", subdir = "R-packages/covidcast")
+library(covidcast)
+
+data <- covidcast_signal("fb-survey", "smoothed_cli", start_day = "2020-05-01",
+                         end_day = "2020-05-07")
+
+```
+
+```{r}
+url <- "https://cmu-delphi.github.io/delphi-epidata/api/covidcast_signals.html"
+table <- read_html(url)
+tab <- table %>% html_nodes("table")
+tab <- tab[[1]] %>% html_table %>% data.frame()
+tab
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
